@@ -1,15 +1,20 @@
 // O QUE FALTA:
 //
-// BOTAR TÕTULO/LEGENDA NO GRAFICO
-// INFORMA«’ES EXTRAS (mais sorteados, menos sorteados)
-// CORRIGIR FUN«√O DO IDX DOS MAIORES VALORES
+// BOTAR T√çTULO/LEGENDA NO GRAFICO
+// INFORMA√á√ïES EXTRAS (mais sorteados, menos sorteados)
+// CORRIGIR FUN√á√ÉO DO IDX DOS MAIORES VALORES
 
 
-// INFORMA«’ES IMPORTANTES:
+// INFORMA√á√ïES IMPORTANTES:
 // 
-// N∞ 0 N√O PODE SER JOGADO, POR ISSO N√O FOI UTILIDO NOS ARRAYS
-// SE VC QUISER 20 IDX NO GRAFICO, BOTAR 21 J¡ QUE O 0 … DESCONSIDERADO
+// N¬∞ 0 N√ÉO PODE SER JOGADO, POR ISSO N√ÉO FOI UTILIDO NOS ARRAYS
+// SE VC QUISER 20 IDX NO GRAFICO, BOTAR 21 J√Å QUE O 0 √â DESCONSIDERADO
 
+// TESTAR:
+// 
+// NA FUNCAO IDX, AO INVES DE PASSAR 3 FUNCOES,
+// PASSAR SOMENTE MAIN E IDX, E CRIAR COPIA SORTED
+// DENTRO DA FUNCAO IDX
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -66,8 +71,8 @@ int valueDescendingSort(int l[TAMANHO]) { // vai ordenar os valores de idx 1 a 6
 } 
 
 int idxDescendingSort(int sortedValues[TAMANHO], int mapa[TAMANHO], int idxSorted[TAMANHO]) { // incompleta:
-																		// em caso de valores repetidos n„o funciona  
-																		// a fun„o seria ordenar os idx, com base no valor delas
+																		// em caso de valores repetidos n√£o funciona  
+																		// a fun√£o seria ordenar os idx, com base no valor delas
 	int comp = 0;
 	bool encontrou = false;
 	
@@ -108,7 +113,7 @@ int maxMapValue(int l[TAMANHO]) {
 	
 } 
 
-void printGraph (int mapa[TAMANHO]) { // vai receber um array que representa cada n˙mero e sua frequÍncia
+void printGraph (int mapa[TAMANHO]) { // vai receber um array que representa cada n√∫mero e sua frequ√™ncia
 									// Ex: mapa[5] armazena o int 10, quer dizer que 5 aparece 10 xs
 	
 	int maxValue = maxMapValue(mapa);
@@ -146,7 +151,7 @@ void printGraph (int mapa[TAMANHO]) { // vai receber um array que representa cad
 		
 	}
 	
-	// imrprime idx (n˙meros sorteados)
+	// imrprime idx (n√∫meros sorteados)
 	
 	printf("\n    |");
 	
@@ -160,7 +165,7 @@ void printGraph (int mapa[TAMANHO]) { // vai receber um array que representa cad
 
 int main(){
 	
-	// definindo valores aleatÛrios para um array
+	// definindo valores aleat√≥rios para um array
 	
 	srand((unsigned) time(&t));
 
@@ -170,12 +175,12 @@ int main(){
 	
 	}
         
-	// criando uma cÛpia do mapa e ordenando ela
+	// criando uma c√≥pia do mapa e ordenando ela
 	int sortedValues[TAMANHO];
 	copyArray(mapa, sortedValues);
 	valueDescendingSort(sortedValues);
 	
-	// n„o est· funcionando
+	// n√£o est√° funcionando
 	int idxSorted[TAMANHO];
 	copyArray(mapa, idxSorted);
 	idxDescendingSort(sortedValues, mapa, idxSorted);
