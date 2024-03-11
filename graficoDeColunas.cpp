@@ -1,20 +1,7 @@
-// O QUE FALTA:
-//
-// BOTAR TÍTULO/LEGENDA NO GRAFICO
-// INFORMAÇÕES EXTRAS (mais sorteados, menos sorteados)
-// CORRIGIR FUNÇÃO DO IDX DOS MAIORES VALORES
-
-
-// INFORMAÇÕES IMPORTANTES:
+// INFORMACOES IMPORTANTES:
 // 
-// N° 0 NÃO PODE SER JOGADO, POR ISSO NÃO FOI UTILIDO NOS ARRAYS
-// SE VC QUISER 20 IDX NO GRAFICO, BOTAR 21 JÁ QUE O 0 É DESCONSIDERADO
-
-// TESTAR:
-// 
-// NA FUNCAO IDX, AO INVES DE PASSAR 3 FUNCOES,
-// PASSAR SOMENTE MAIN E IDX, E CRIAR COPIA SORTED
-// DENTRO DA FUNCAO IDX
+// NUMERO 0 NAO PODE SER JOGADO, POR ISSO NAO FOI UTILIZADO NOS ARRAYS
+// SE VC QUISER 20 IDX NO GRAFICO, BOTAR 21 JA QUE O 0 FOI DESCONSIDERADO
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -22,19 +9,9 @@
 #include <cstdio>
 
 int i = 0, j = 0, temp = 0;
-const int TAMANHO = 21;
+const int TAMANHO = 61;
 int mapa[TAMANHO];
 time_t t;
-
-void printArray(int l[TAMANHO]) { // printa valores de um array
-	
-	for (i = 0; i < TAMANHO; i++) {
-	
-		printf("%d\n", l[i]);
-	
-	}  
-	
-}
 
 int copyArray(int l[TAMANHO], int l2[TAMANHO]) { // cria a copia de uma array
 	
@@ -70,30 +47,6 @@ int valueDescendingSort(int l[TAMANHO]) { // vai ordenar os valores de idx 1 a 6
 	
 } 
 
-int idxDescendingSort(int sortedValues[TAMANHO], int mapa[TAMANHO], int idxSorted[TAMANHO]) { // incompleta:
-																		// em caso de valores repetidos não funciona  
-																		// a funão seria ordenar os idx, com base no valor delas
-	int comp = 0;
-	bool encontrou = false;
-	
-	for (i = 1; i < TAMANHO; i++) {
-		
-		
-		for (j = 1; encontrou != true; j++) {
-			
-			encontrou = sortedValues[i] == mapa[j];
-			
-		}
-		
-		idxSorted[i] = j - 1;
-		encontrou = false;
-		
-	}
-	
-	return idxSorted[TAMANHO];
-	
-}
-
 int maxMapValue(int l[TAMANHO]) { 
 	
 	int maxValue = 0;
@@ -113,12 +66,107 @@ int maxMapValue(int l[TAMANHO]) {
 	
 } 
 
+
+void printTableMostSorted(int mapa[TAMANHO]) {
+		
+	int valueSorted[TAMANHO];
+	copyArray(mapa, valueSorted);
+	valueDescendingSort(valueSorted);
+	int printed = 1;
+	int comp, temp;
+	
+	j = 1;
+	comp = valueSorted[j];
+	int rank = 1; 
+	
+	printf("Most sorted numbers (min: 5)\n------------------------\n| Pos. | Idx. | Value. |\n------------------------\n");
+	
+	while (printed < 6) {
+		
+		// printar todos os idx e valores dos maiores valores
+		for (i = 1; i < TAMANHO; i++) {
+			
+			if (comp == mapa[i]) {
+				
+				printf("| %4d | %4d | %6d |\n", rank, i, mapa[i]);
+				printed++;
+				
+			}
+			
+		}
+	
+		rank++;
+	
+		// mudar valor dos n�meros que ser�o printados
+		temp = valueSorted[j];
+		while (temp == comp) {
+			
+			j++;
+			comp = valueSorted[j]; 
+			
+		}
+		
+	}
+	
+	printf("------------------------\n\n");
+	
+}
+
+void printTableLessSorted(int mapa[TAMANHO]) {
+	
+	int valueSorted[TAMANHO];
+	copyArray(mapa, valueSorted);
+	valueDescendingSort(valueSorted);
+	int printed = 1;
+	int comp, temp;
+	
+	j = TAMANHO - 1;
+	comp = valueSorted[j];
+	int rank = 1; 
+	
+	printf("Less sorted numbers (min: 5)\n------------------------\n| Pos. | Idx. | Value. |\n------------------------\n");
+	
+	while (printed < 6) {
+		
+		// printar todos os idx e valores dos maiores valores
+		for (i = 1; i < TAMANHO; i++) {
+			
+			if (comp == mapa[i]) {
+				
+				printf("| %4d | %4d | %6d |\n", rank, i, mapa[i]);
+				printed++;
+				
+			}
+			
+		}
+	
+		rank++;
+	
+		// mudar valor dos n�meros que ser�o printados
+		temp = valueSorted[j];
+		while (temp == comp) {
+			
+			j--;
+			comp = valueSorted[j]; 
+			
+		}
+		
+	}
+	
+	printf("------------------------\n\n");
+	
+}
+
 void printGraph (int mapa[TAMANHO]) { // vai receber um array que representa cada número e sua frequência
 									// Ex: mapa[5] armazena o int 10, quer dizer que 5 aparece 10 xs
 	
 	int maxValue = maxMapValue(mapa);
 	
 	// imprime colunas 
+
+	// BOTAR TITULO/LEGENDA NO GRAFICO
+	printf("-------------------------------------\n|Frequency Graph: Most Sorted Number|\n-------------------------------------\n");
+	
 	
 	for (i = maxValue; i > 0; i--) {
 		
@@ -161,11 +209,16 @@ void printGraph (int mapa[TAMANHO]) { // vai receber um array que representa cad
 		
 	} 
 	
+	printf("\n\n");
+	
+	printTableMostSorted(mapa);
+	printTableLessSorted(mapa);
+	
 }
 
 int main(){
 	
-	// definindo valores aleatórios para um array
+	// definindo valores aleatorios para um array
 	
 	srand((unsigned) time(&t));
 
@@ -174,30 +227,17 @@ int main(){
 		mapa[i] = (rand() % 21);
 	
 	}
-        
-	// criando uma cópia do mapa e ordenando ela
-	int sortedValues[TAMANHO];
-	copyArray(mapa, sortedValues);
-	valueDescendingSort(sortedValues);
+        	
+	for (i = 0; i < TAMANHO; i++) {
 	
-	// não está funcionando
-	int idxSorted[TAMANHO];
-	copyArray(mapa, idxSorted);
-	idxDescendingSort(sortedValues, mapa, idxSorted);
+		printf("%d\n", mapa[i]);
+	
+	}  
+	
 
-	printArray(mapa);
 	
-	printf("-----------------------------\n");
-	
-	printArray(sortedValues);
-	
-	printf("-----------------------------\n");
-	
-	printf("%d\n", maxMapValue(mapa));
-
 	printf("-----------------------------\n");
 	
 	printGraph(mapa);
-	
 	
 }
